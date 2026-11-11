@@ -21,7 +21,7 @@
 import { Buffer } from 'node:buffer';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { open } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -74,6 +74,20 @@ execFileSync('npx', ['expo', 'export', '--platform', 'web', '--output-dir', out,
     EXPO_WEB_BASE_URL: base,
   },
 });
+
+// The packages' own assets (the icon fonts) come out under assets/node_modules/, a folder
+// name every .gitignore leaves out, so they would never reach the published site: moved to
+// assets/vendor/, and the scripts that name them changed with them
+const vendored = path.join(out, 'assets', 'node_modules');
+if (existsSync(vendored)) {
+  renameSync(vendored, path.join(out, 'assets', 'vendor'));
+  const scriptsDir = path.join(out, '_expo', 'static', 'js', 'web');
+  for (const name of readdirSync(scriptsDir)) {
+    const file = path.join(scriptsDir, name);
+    const text = readFileSync(file, 'utf8');
+    if (text.includes('/assets/node_modules/')) writeFileSync(file, text.replaceAll('/assets/node_modules/', '/assets/vendor/'));
+  }
+}
 
 // The page: boot.js first, the app's scripts once the backend answers
 const page = path.join(out, 'index.html');

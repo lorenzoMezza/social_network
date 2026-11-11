@@ -1,36 +1,43 @@
 # UnnamedApp
 
-A social map app for meeting people at the events around you, in person. A live 3D map of
-your neighbourhood where the people around you walk as their avatars and anyone can pin an
-event that everyone nearby sees as a beam of light. iOS and Android, built end to end: the
-mobile app, the real-time 3D map and the backend behind them.
-
-**[Showcase](https://lorenzomezza.github.io/social_network/)** ·
-**[Try the beta in your browser](https://lorenzomezza.github.io/social_network/demo/)**
+<p align="center">
+  <b>A social map for meeting people at the events around you, in person.</b><br>
+  A live 3D map of your neighbourhood: the people around you walk on it as their avatars, and
+  anyone can pin an event that everyone nearby sees as a beam of light.
+</p>
 
 <p align="center">
-  <img src="show-case/media/people.jpg" width="190" alt="People walking on the map">
-  <img src="show-case/media/pin.jpg" width="190" alt="A new event and its beam of light">
-  <img src="show-case/media/connect.jpg" width="190" alt="Connecting in person">
-  <img src="show-case/media/you.jpg" width="190" alt="The avatar editor">
+  <a href="https://lorenzomezza.github.io/social_network/"><img src="https://img.shields.io/badge/See%20the%20showcase%20site-316CEE?style=for-the-badge" alt="See the showcase site"></a>
+  &nbsp;
+  <a href="https://lorenzomezza.github.io/social_network/demo/"><img src="https://img.shields.io/badge/Try%20the%20beta%20in%20your%20browser-F5B544?style=for-the-badge" alt="Try the beta in your browser"></a>
 </p>
+
+<p align="center">
+  <b>Showcase site:</b> <a href="https://lorenzomezza.github.io/social_network/">lorenzomezza.github.io/social_network</a>
+  · videos of every feature, how it's built, and the app to try in the browser
+</p>
+
+<p align="center">
+  <img src="docs/images/people.gif" width="200" alt="Tapping someone walking on the map: the camera flies over and a wave goes out">
+  <img src="docs/images/flash.gif" width="200" alt="A new flash event and its beam of light rising over the spot">
+  <img src="docs/images/spot.gif" width="200" alt="Tapping a beam of light: the camera flies to the event and its page opens">
+  <img src="docs/images/storm.gif" width="200" alt="A storm rolling in at night over the map">
+</p>
+
+iOS and Android, built end to end: the mobile app, the real-time 3D map and the backend behind
+them.
 
 ## What it does
 
-- **Your neighbourhood, live in 3D.** Real streets from OpenStreetMap, at the real hour and in
-  the real weather.
-- **See who's out, right now.** The people around you walk on the map where they really are.
-  Wave, say hi, or say something to everyone nearby. Visible, approximate or invisible: you
-  choose each time you open the map.
-- **Anyone can put an event on the map.** A flash event with a long press, or a planned one
-  with photos and a description. The organizer chooses how far it reaches (100 to 800 m) and
-  how it looks.
-- **You only see what reaches you,** on the map and in one list.
-- **Meet first, connect after.** No search and no friend requests: one phone shows a code,
-  the other scans it.
-- **The plan before, the photos after.** Chats, groups and polls, and a shared album for every
-  event.
-- **Show up as you.** A 3D avatar built from hundreds of pieces, and a profile you style.
+| | |
+|:---:|---|
+| <img src="docs/images/map.jpg" width="170" alt="The 3D map at noon"> | **Your neighbourhood, live in 3D.** Real streets from OpenStreetMap, drawn like a model you can turn in your hand, at the real hour and in the real weather. |
+| <img src="docs/images/people.jpg" width="170" alt="A person's card with gestures"> | **See who's out, right now.** The people around you walk on the map where they really are. Wave, say hi, or say something to everyone nearby. Visible, approximate or invisible: you choose each time you open the map. |
+| <img src="docs/images/event-page.jpg" width="170" alt="An event page with its cover photo"> | **Anyone can put an event on the map.** A flash event with a long press, or a planned one with photos and a description. The organizer chooses how far it reaches (100 to 800 m), how its beam moves, its colours and the look of its page. |
+| <img src="docs/images/events.jpg" width="170" alt="The list of events around"> | **You only see what reaches you.** On the map as beams of light, and in one list: what's on now at the top, the ones your friends are going to marked. |
+| <img src="docs/images/connect.jpg" width="170" alt="The code to connect in person"> | **Meet first, connect after.** No search and no friend requests: one phone shows a code, the other scans it. Everyone you're connected with is someone you actually met. |
+| <img src="docs/images/chats.jpg" width="170" alt="Chats and groups"> <img src="docs/images/album.jpg" width="170" alt="An event's shared album"> | **The plan before, the photos after.** Chats, groups and polls, a chat for every event you join, and a shared album where everyone who went adds their pictures. |
+| <img src="docs/images/avatar.jpg" width="170" alt="The avatar editor"> <img src="docs/images/profile.jpg" width="170" alt="A styled profile"> | **Show up as you.** A 3D avatar built from hundreds of pieces walks for you on the map, and your profile shows it the way you style it. |
 
 ## How it's built
 
@@ -65,7 +72,8 @@ Some of the choices, in short:
 
 ## Try it
 
-- **In the browser:** [the beta](https://lorenzomezza.github.io/social_network/demo/) runs the
+- **On the web:** the [showcase site](https://lorenzomezza.github.io/social_network/) has a video of every
+  feature. [The beta](https://lorenzomezza.github.io/social_network/demo/) runs the
   real app code with its Python backend compiled to WebAssembly, in your tab. It is a web
   stand-in for a phone app, so expect rough edges.
 - **On your computer:** `make dev` sets everything up and starts the servers and Expo (macOS or
