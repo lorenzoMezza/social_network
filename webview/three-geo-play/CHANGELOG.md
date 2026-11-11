@@ -2,7 +2,7 @@
 
 ## Unreleased (projectExpoFrontend copy)
 
-Vendored from https://github.com/lorenzoMezza/Three-geo-play at 961fe79 (2.3.0) and tuned for mobile:
+Vendored from https://github.com/lorenzoMezza/Three-geo-play at b0f68e3 (2.3.0) and tuned for mobile:
 
 - Round caps that another line of the same batch already covers are left out: a cap ending on a vertex of a line at least as wide, or where several ends meet (the widest keeps its cap). Coverage only changes within the arc tessellation. About a quarter fewer road triangles in dense cities.
 - Ramps with the same fill material as the roads around them join their batch instead of getting one each: fewer (often empty) batches.
