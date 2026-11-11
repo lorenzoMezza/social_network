@@ -1,0 +1,21 @@
+{
+  "name": "map-webview",
+  "author": "Lorenzo Mezzabarba",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "node scripts/dev.mjs"
+  },
+  "dependencies": {
+    "three": "^0.183.2"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "google-closure-compiler": "^20261004.0.0",
+    "puppeteer-core": "25.13.0"
+  },
+  "allowScripts": {
+    "esbuild": true
+  }
+}

@@ -1,0 +1,85 @@
+# Copyright (c) 2026 Lorenzo Mezzabarba. All rights reserved.
+
+# Versions checked on Maven Central on 2026-11-11. What the Spring Boot BOM manages
+# (Jackson, Jetty, jOOQ, Flyway, HikariCP, pgjdbc, Caffeine, Lettuce, Micrometer,
+# Testcontainers, JUnit, AssertJ, Logback) is never written here: it moves with the BOM,
+# already tested together (JAVA-BACKEND.md §5, Librerie).
+[versions]
+springBoot = "4.1.2"
+nimbus = "10.10"
+phtree = "2.8.2"
+dbScheduler = "16.12.0"
+jnats = "2.26.4"
+awsSdk = "2.57.12"
+archunit = "1.5.1"
+errorprone = "2.52.0"
+errorpronePlugin = "5.2.0"
+nullaway = "0.14.3"
+jspecify = "1.0.1"
+checkerQual = "3.55.1"
+jqwik = "1.10.2"
+appleStoreServer = "5.2.0"
+androidPublisher = "v3-rev20260924-2.0.0"
+googleAuth = "1.55.0"
+
+[libraries]
+spring-boot-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "springBoot" }
+spring-boot-starter-webmvc = { module = "org.springframework.boot:spring-boot-starter-webmvc" }
+spring-boot-starter-jetty = { module = "org.springframework.boot:spring-boot-starter-jetty" }
+spring-boot-starter-jooq = { module = "org.springframework.boot:spring-boot-starter-jooq" }
+spring-boot-starter-flyway = { module = "org.springframework.boot:spring-boot-starter-flyway" }
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-boot-testcontainers = { module = "org.springframework.boot:spring-boot-testcontainers" }
+spring-tx = { module = "org.springframework:spring-tx" }
+spring-jdbc = { module = "org.springframework:spring-jdbc" }
+spring-webmvc = { module = "org.springframework:spring-webmvc" }
+jakarta-servlet = { module = "jakarta.servlet:jakarta.servlet-api" }
+
+jackson-databind = { module = "tools.jackson.core:jackson-databind" }
+jetty-server = { module = "org.eclipse.jetty:jetty-server" }
+jetty-websocket-server = { module = "org.eclipse.jetty.websocket:jetty-websocket-jetty-server" }
+jetty-websocket-client = { module = "org.eclipse.jetty.websocket:jetty-websocket-jetty-client" }
+jooq = { module = "org.jooq:jooq" }
+jooq-codegen = { module = "org.jooq:jooq-codegen" }
+jooq-meta = { module = "org.jooq:jooq-meta" }
+flyway-core = { module = "org.flywaydb:flyway-core" }
+flyway-postgresql = { module = "org.flywaydb:flyway-database-postgresql" }
+postgresql = { module = "org.postgresql:postgresql" }
+hikaricp = { module = "com.zaxxer:HikariCP" }
+caffeine = { module = "com.github.ben-manes.caffeine:caffeine" }
+lettuce = { module = "io.lettuce:lettuce-core" }
+micrometer-prometheus = { module = "io.micrometer:micrometer-registry-prometheus" }
+slf4j-api = { module = "org.slf4j:slf4j-api" }
+jakarta-xml-bind = { module = "jakarta.xml.bind:jakarta.xml.bind-api" }
+checker-qual = { module = "org.checkerframework:checker-qual", version.ref = "checkerQual" }
+logback-classic = { module = "ch.qos.logback:logback-classic" }
+
+nimbus-jose-jwt = { module = "com.nimbusds:nimbus-jose-jwt", version.ref = "nimbus" }
+phtree = { module = "ch.ethz.globis.phtree:phtree", version.ref = "phtree" }
+db-scheduler = { module = "com.github.kagkarlsson:db-scheduler", version.ref = "dbScheduler" }
+db-scheduler-boot = { module = "com.github.kagkarlsson:db-scheduler-spring-boot-4-starter", version.ref = "dbScheduler" }
+jnats = { module = "io.nats:jnats", version.ref = "jnats" }
+aws-bom = { module = "software.amazon.awssdk:bom", version.ref = "awsSdk" }
+aws-s3 = { module = "software.amazon.awssdk:s3" }
+aws-url-client = { module = "software.amazon.awssdk:url-connection-client" }
+apple-store-server = { module = "com.apple.itunes.storekit:app-store-server-library", version.ref = "appleStoreServer" }
+android-publisher = { module = "com.google.apis:google-api-services-androidpublisher", version.ref = "androidPublisher" }
+google-auth = { module = "com.google.auth:google-auth-library-oauth2-http", version.ref = "googleAuth" }
+jspecify = { module = "org.jspecify:jspecify", version.ref = "jspecify" }
+
+errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
+nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
+errorprone-plugin = { module = "net.ltgt.gradle:gradle-errorprone-plugin", version.ref = "errorpronePlugin" }
+
+junit-bom = { module = "org.junit:junit-bom" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+junit-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+assertj = { module = "org.assertj:assertj-core" }
+archunit = { module = "com.tngtech.archunit:archunit-junit5", version.ref = "archunit" }
+jqwik = { module = "net.jqwik:jqwik", version.ref = "jqwik" }
+testcontainers-postgresql = { module = "org.testcontainers:testcontainers-postgresql" }
+testcontainers-junit = { module = "org.testcontainers:testcontainers-junit-jupiter" }
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }

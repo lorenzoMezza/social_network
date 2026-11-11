@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://masterkey.app/schema/avatar.v1.json",
+  "title": "Avatar",
+  "description": "What one user chose for their avatar. Item IDs refer to the avatar catalog; the document never contains file URLs. Validated (and repaired) by validateAvatar() in shared/avatarFormat.js, which also checks the IDs against the catalog.",
+  "type": "object",
+  "required": ["format", "version", "bodyShape", "colors", "wearables"],
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "masterkey.avatar" },
+    "version": { "const": 1 },
+    "bodyShape": {
+      "description": "ID of a catalog item of category body_shape",
+      "enum": ["base-avatars:BaseFemale", "base-avatars:BaseMale"]
+    },
+    "colors": {
+      "type": "object",
+      "required": ["skin", "hair", "eyes"],
+      "additionalProperties": false,
+      "properties": {
+        "skin": { "$ref": "#/$defs/color", "description": "Skin materials (named *skin*) of the body and of the worn items" },
+        "hair": { "$ref": "#/$defs/color", "description": "Hair materials (named *hair*), beard and eyebrows" },
+        "eyes": { "$ref": "#/$defs/color", "description": "Iris, where the eyes texture has a mask" }
+      }
+    },
+    "wearables": {
+      "description": "One catalog item ID per slot. eyes, eyebrows and mouth are required; every other slot is optional.",
+      "type": "object",
+      "required": ["eyes", "eyebrows", "mouth"],
+      "additionalProperties": false,
+      "propertyNames": {
+        "enum": ["eyes", "eyebrows", "mouth", "hair", "facial_hair", "upper_body", "lower_body", "feet", "hat", "helmet", "mask", "eyewear", "earring", "tiara", "top_head", "hands_wear", "skin"]
+      },
+      "patternProperties": { "": { "$ref": "#/$defs/itemId" } }
+    },
+    "updatedAt": {
+      "description": "Set by the server when saved",
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
+  },
+  "$defs": {
+    "color": { "type": "string", "pattern": "^#[0-9A-Fa-f]{6}$" },
+    "itemId": { "type": "string", "pattern": "^[\\w.-]+:[^\\s]+$", "description": "<collection>:<name>, e.g. base-avatars:casual_hair_01" }
+  },
+  "examples": [
+    {
+      "format": "masterkey.avatar",
+      "version": 1,
+      "bodyShape": "base-avatars:BaseFemale",
+      "colors": { "skin": "#DDA77F", "hair": "#5A3A24", "eyes": "#5A3A24" },
+      "wearables": {
+        "eyes": "base-avatars:f_eyes_00",
+        "eyebrows": "base-avatars:f_eyebrows_00",
+        "mouth": "base-avatars:f_mouth_00",
+        "hair": "base-avatars:shoulder_bob_hair",
+        "upper_body": "base-avatars:f_sweater",
+        "lower_body": "base-avatars:f_jeans",
+        "feet": "base-avatars:bun_shoes"
+      },
+      "updatedAt": "2026-10-13T09:30:00.000Z"
+    }
+  ]
+}

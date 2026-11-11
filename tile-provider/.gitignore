@@ -1,0 +1,5 @@
+node_modules/
+# Downloads (OpenStreetMap extracts, ocean and lake shapes) and temporary files
+/data/
+# The tiles made: too big for git, they go to the server / CDN
+/output/

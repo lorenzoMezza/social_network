@@ -1,0 +1,298 @@
+/* Copyright (c) 2026 Lorenzo Mezzabarba. All rights reserved. */
+
+/* The page goes through a day, as the map does: noon cobalt at the top, then the story
+   from afternoon plaster to night, the colour changing softly with each chapter. */
+:root {
+  --sky: #316cee;
+  --sky-mid: #5b86f1;
+  --haze: #a9a6f0;
+  --apricot: #f6c3a1;
+  --peach: #f3ae94;
+  --coral: #ee9c86;
+  --rose: #e493a2;
+  --dusk: #d98bb4;
+  --mauve: #c99ad6;
+  --lilac: #b7a8ee;
+  --evening: #9a90e6;
+  --periwinkle: #7d7ddc;
+  --indigo: #6370d6;
+  --blue: #4b5bd1;
+  --night: #241e4a;
+  --midnight: #1d1840;
+  --late: #17132f;
+  --gold: #f5b544;
+  --ink: #262a86;
+  --cream: #fff1e6;
+  --bezel: #0d0d12;
+  --rim: #d6d0c7;
+
+  --font: 'Bricolage Grotesque', 'Avenir Next', 'Segoe UI', system-ui, sans-serif;
+  --gutter: clamp(20px, 5vw, 72px);
+  --content: 1240px;
+  --measure: 32rem;
+  --h1: clamp(2.7rem, 1.2rem + 5.4vw, 6rem);
+  --h2: clamp(2.1rem, 1.2rem + 3vw, 3.9rem);
+  --lead: clamp(1.1rem, 1rem + 0.45vw, 1.35rem);
+  --nav: 64px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--late); color: var(--ink);
+  font-family: var(--font); font-size: 1.0625rem; line-height: 1.55; font-variation-settings: 'opsz' 14;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+img, video, svg { display: block; max-width: 100%; }
+h1, h2, h3 { margin: 0; font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; }
+h1 { font-size: var(--h1); line-height: 0.92; font-variation-settings: 'opsz' 96, 'wdth' 80; }
+h2 { font-size: var(--h2); line-height: 0.98; font-variation-settings: 'opsz' 72, 'wdth' 86; }
+h3 { font-size: 1.25rem; line-height: 1.2; letter-spacing: 0; }
+p { margin: 0; text-wrap: pretty; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; border-radius: 8px; }
+
+.skip { position: absolute; left: -999px; top: 8px; z-index: 30; background: var(--cream); color: var(--ink); padding: 10px 16px; border-radius: 999px; }
+.skip:focus { left: 8px; }
+
+/* Buttons */
+.button {
+  white-space: nowrap;
+  display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 1.5em;
+  border-radius: 999px; border: 0; font: 700 1rem/1 var(--font); text-decoration: none; cursor: pointer;
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+.button:active { transform: scale(0.97); }
+.button-light { background: var(--cream); color: var(--sky); }
+.button-light:hover { background: #fff; }
+.button-gold { background: var(--gold); color: var(--night); }
+.button-gold:hover { background: #ffc865; }
+.button-outline-light { background: transparent; color: var(--cream); box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--cream) 70%, transparent); }
+.button-outline-light:hover { background: color-mix(in oklab, var(--cream) 14%, transparent); }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.button-small { min-height: 40px; padding: 0 1.1em; font-size: 0.92rem; background: var(--cream); color: var(--sky); }
+.button-small.button-gold { background: var(--gold); color: var(--night); }
+.bar-actions { display: flex; gap: 8px; }
+
+/* Reading progress */
+.progress { position: fixed; inset: 0 0 auto; height: 3px; z-index: 25; pointer-events: none; }
+.progress span { display: block; height: 100%; background: var(--gold); transform-origin: 0 50%; transform: scaleX(0); }
+
+/* The bar: clear over the sky, frosted once the story starts */
+.bar {
+  position: fixed; inset: 0 0 auto; z-index: 20; height: calc(var(--nav) + env(safe-area-inset-top));
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  padding: env(safe-area-inset-top) var(--gutter) 0; color: var(--cream);
+  transition: background-color 300ms ease, box-shadow 300ms ease;
+}
+.bar.is-scrolled {
+  background: color-mix(in oklab, var(--late) 72%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
+  box-shadow: 0 1px 0 color-mix(in oklab, var(--cream) 10%, transparent);
+}
+.wordmark { font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em; text-decoration: none; font-variation-settings: 'opsz' 40, 'wdth' 85; }
+.chapters-nav { display: flex; gap: clamp(14px, 2.4vw, 32px); list-style: none; margin: 0; padding: 0; }
+.chapters-nav a { text-decoration: none; font-weight: 600; font-size: 0.95rem; opacity: 0.78; padding: 6px 0; border-bottom: 2px solid transparent; transition: opacity 200ms, border-color 200ms, color 200ms; }
+.chapters-nav a:hover { opacity: 1; }
+.chapters-nav a[aria-current='true'] { opacity: 1; color: var(--gold); border-bottom-color: var(--gold); }
+
+/* Noon: the whole first screen, the sky in three flat bands down to the skyline */
+.hero {
+  position: relative; min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column;
+  background: linear-gradient(to top, var(--haze) 0 14%, var(--sky-mid) 14% 24%, var(--sky) 24%);
+  color: var(--cream); overflow: hidden;
+}
+.hero-body {
+  flex: 1; width: 100%; max-width: var(--content); margin: 0 auto;
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); align-items: center; gap: clamp(24px, 5vw, 72px);
+  padding: calc(var(--nav) + 24px) var(--gutter) 0;
+}
+.hero h1 { max-width: 11ch; }
+.stack { list-style: none; margin: 0 0 2rem; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.stack li { padding: 6px 12px; border-radius: 999px; font-size: 0.9rem; font-weight: 600; background: color-mix(in oklab, var(--cream) 16%, transparent); }
+.lead { margin: 1.4rem 0 1.4rem; font-size: var(--lead); line-height: 1.45; max-width: 30rem; opacity: 0.94; }
+.phone-hero { justify-self: center; height: min(64vh, 640px); height: min(64svh, 640px); width: auto; transform: rotate(2deg); }
+.scroll-cue {
+  position: relative; z-index: 2; align-self: center; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  margin-top: 18px; color: var(--cream); text-decoration: none; font-weight: 600; font-size: 0.95rem;
+}
+.scroll-cue svg { width: 26px; height: 26px; animation: nudge 2.2s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+.skyline { width: 100%; height: clamp(100px, 15vw, 220px); flex: none; margin-top: -12px; }
+.plane-far { fill: #a99ceb; }
+.plane-mid { fill: #e8998d; }
+.plane-arches { fill: #c9787a; }
+.plane-near { fill: var(--apricot); }
+
+/* The phone: the recordings already carry the status bar and the island */
+.phone {
+  /* a thin black bezel and a natural-titanium rim, like the real thing */
+  margin: 0; aspect-ratio: 600 / 1304; border-radius: 13% / 6%; padding: 1.2%; background: #0d0d12;
+  box-shadow: 0 0 0 2px var(--rim), 0 0 0 3px color-mix(in oklab, var(--rim) 40%, #0d0d12), 0 50px 80px -36px color-mix(in oklab, var(--night) 70%, transparent);
+}
+.phone video { width: 100%; height: 100%; object-fit: cover; border-radius: 12% / 5.5%; background: #0d0d12; }
+
+/* The story: the colour of each chapter, softly */
+.story {
+  --bg: var(--apricot); --fg: var(--ink);
+  position: relative; background: var(--bg); color: var(--fg);
+  transition: background-color 800ms ease, color 800ms ease;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+}
+.story[data-tone='apricot'] { --bg: var(--apricot); --fg: var(--ink); }
+.story[data-tone='peach'] { --bg: var(--peach); --fg: var(--ink); }
+.story[data-tone='coral'] { --bg: var(--coral); --fg: var(--ink); }
+.story[data-tone='rose'] { --bg: var(--rose); --fg: var(--ink); }
+.story[data-tone='dusk'] { --bg: var(--dusk); --fg: var(--ink); }
+.story[data-tone='mauve'] { --bg: var(--mauve); --fg: var(--ink); }
+.story[data-tone='lilac'] { --bg: var(--lilac); --fg: var(--ink); }
+.story[data-tone='evening'] { --bg: var(--evening); --fg: var(--late); }
+.story[data-tone='periwinkle'] { --bg: var(--periwinkle); --fg: var(--cream); }
+.story[data-tone='indigo'] { --bg: var(--indigo); --fg: var(--cream); }
+.story[data-tone='blue'] { --bg: var(--blue); --fg: var(--cream); }
+.story[data-tone='night'] { --bg: var(--night); --fg: var(--cream); }
+
+.chapters { padding-left: max(var(--gutter), calc((100vw - var(--content)) / 2 + var(--gutter))); }
+.chapter { min-height: 100vh; min-height: 100svh; display: flex; flex-direction: column; justify-content: center; padding: 96px 0; max-width: var(--measure); }
+.chapter h2 { margin-bottom: 1.2rem; }
+.chapter p { font-size: var(--lead); line-height: 1.5; }
+.phone-inline { display: none; }
+/* How each part works, for the engineers reading: quieter than the story, set apart by a rule */
+.chapter .note {
+  margin-top: 1.4rem; padding-left: 14px; border-left: 3px solid color-mix(in oklab, currentColor 35%, transparent);
+  font-size: 0.98rem; line-height: 1.55; opacity: 0.86;
+}
+
+/* One phone in view for the whole story, its clip changing with the chapter */
+.stage { position: relative; }
+.phone-stage {
+  position: sticky; top: calc(50vh - min(40vh, 390px)); top: calc(50svh - min(40svh, 390px));
+  height: min(80vh, 780px); height: min(80svh, 780px); width: auto; margin: 0 auto;
+  display: grid;
+}
+.phone-stage video { grid-area: 1 / 1; opacity: 0; transition: opacity 500ms ease; }
+.phone-stage video.is-on { opacity: 1; }
+
+/* Connecting, in three steps */
+.steps { list-style: none; margin: 2rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 2vw, 22px); counter-reset: step; }
+.steps li { counter-increment: step; display: flex; flex-direction: column; gap: 10px; font-size: 0.95rem; line-height: 1.35; font-weight: 600; }
+.steps img { width: 100%; max-width: 130px; height: auto; border-radius: 16px; border: 2px solid var(--bezel); outline: 1.5px solid var(--rim); box-shadow: 0 24px 40px -26px color-mix(in oklab, var(--night) 80%, transparent); }
+.steps span::before { content: counter(step) '. '; }
+
+/* Engineering: the architecture, a few true numbers, the choices */
+.engineering { background: var(--late); color: var(--cream); padding: clamp(80px, 11vw, 150px) var(--gutter); }
+.engineering-inner { max-width: var(--content); margin: 0 auto; }
+.engineering h2 { color: var(--gold); }
+.engineering .built-lead { margin-top: 1rem; font-size: var(--lead); max-width: 44rem; color: color-mix(in oklab, var(--cream) 80%, var(--late)); }
+.architecture { margin: 3.2rem 0 0; display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.4fr); align-items: center; gap: 18px; }
+.arch-col { display: grid; gap: 12px; }
+.arch-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.arch-box { border-radius: 18px; padding: 16px 18px; background: color-mix(in oklab, var(--cream) 7%, var(--late)); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--cream) 14%, transparent); }
+.arch-box strong { display: block; font-size: 1.05rem; }
+.arch-box span { display: block; font-size: 0.9rem; color: color-mix(in oklab, var(--cream) 70%, var(--late)); margin-top: 2px; }
+.arch-app { background: color-mix(in oklab, var(--sky) 55%, var(--late)); }
+.arch-map { background: color-mix(in oklab, var(--coral) 40%, var(--late)); }
+.arch-core { background: color-mix(in oklab, var(--gold) 26%, var(--late)); }
+.arch-links { display: grid; gap: 6px; justify-items: center; font-size: 0.85rem; font-weight: 600; color: var(--gold); }
+.arch-links span { position: relative; padding: 0 22px; }
+.arch-links span::before, .arch-links span::after { content: ''; position: absolute; top: 50%; width: 16px; border-top: 2px solid color-mix(in oklab, var(--gold) 70%, transparent); }
+.arch-links span::before { left: 0; }
+.arch-links span::after { right: 0; }
+
+/* Night sections */
+.privacy, .built, .closing { padding: clamp(80px, 11vw, 150px) var(--gutter); color: var(--cream); }
+.section-inner, .privacy > *, .built > * { max-width: var(--content); margin-left: auto; margin-right: auto; }
+.privacy { background: var(--midnight); }
+.privacy h2 { color: var(--gold); }
+.promises { list-style: none; margin-top: 3rem; margin-bottom: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr)); gap: 2rem clamp(20px, 3vw, 40px); }
+.promises li { color: color-mix(in oklab, var(--cream) 80%, var(--midnight)); }
+.promises strong { display: block; color: var(--cream); font-size: 1.2rem; margin-bottom: 0.3rem; }
+.built { background: var(--late); }
+.built .built-lead { margin-top: 1rem; font-size: var(--lead); color: color-mix(in oklab, var(--cream) 78%, var(--late)); }
+.columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13.5rem), 1fr)); gap: 2rem clamp(24px, 3vw, 44px); margin-top: 3rem; }
+.columns h3 { color: var(--gold); margin-bottom: 0.6rem; }
+.columns p { color: color-mix(in oklab, var(--cream) 80%, var(--late)); }
+.closing { background: var(--late); padding-top: clamp(40px, 6vw, 80px); }
+.closing-inner { max-width: var(--content); margin: 0 auto; }
+.closing h2 { font-size: var(--h1); line-height: 0.92; font-variation-settings: 'opsz' 96, 'wdth' 80; color: var(--gold); max-width: 12ch; }
+.closing p { margin: 1.4rem 0 2rem; font-size: var(--lead); max-width: 34rem; color: color-mix(in oklab, var(--cream) 84%, var(--late)); }
+.footer { background: var(--late); color: color-mix(in oklab, var(--cream) 62%, var(--late)); padding: 28px var(--gutter) calc(40px + env(safe-area-inset-bottom)); border-top: 1px solid color-mix(in oklab, var(--cream) 10%, transparent); font-size: 0.95rem; }
+.footer > * { max-width: var(--content); margin-left: auto; margin-right: auto; }
+.footer .credits { margin-top: 0.4rem; font-size: 0.85rem; opacity: 0.8; }
+
+/* Tablets in portrait, phones: one column, each chapter with its own phone */
+@media (max-width: 899px) {
+  .phone-hero { height: min(52vh, 520px); height: min(52svh, 520px); }
+  .story { display: block; }
+  .stage { display: none; }
+  .chapters { padding: 0 var(--gutter); }
+  .chapter { min-height: 0; padding: clamp(64px, 12vw, 96px) 0; max-width: 40rem; margin: 0 auto; }
+  .phone-inline { display: block; width: min(76vw, 340px); margin: 2.2rem auto 0; }
+  .steps img { max-width: 110px; }
+  .architecture { grid-template-columns: minmax(0, 1fr); }
+  .arch-links { grid-auto-flow: column; justify-content: center; gap: 18px; }
+}
+@media (max-width: 520px) {
+  .arch-row { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 720px) {
+  .chapters-nav { display: none; }
+}
+/* Narrow phones: the code stays one tap away in the first screen's buttons */
+@media (max-width: 520px) {
+  .bar-actions .button-small:not(.button-gold) { display: none; }
+}
+/* Phones: the first screen is the words and the way down */
+@media (max-width: 599px) {
+  .hero-body { grid-template-columns: minmax(0, 1fr); align-content: center; }
+  .phone-hero { display: none; }
+}
+/* Short landscape screens: chapters as tall as their words */
+@media (min-width: 900px) and (max-height: 560px) {
+  .chapter { min-height: 0; padding: 72px 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .scroll-cue svg { animation: none; }
+  .story, .bar, .phone-stage video, .button { transition: none; }
+  .phone-hero { transform: none; }
+}
+
+/* Laptops and other short screens: the first screen still ends on the skyline */
+@media (min-width: 600px) and (max-height: 900px) {
+  .hero h1 { font-size: min(var(--h1), 9.2vh); }
+  .lead { margin: 1rem 0 1rem; }
+  .stack { margin-bottom: 1.4rem; }
+  .phone-hero { height: min(58vh, 600px); }
+  .skyline { height: clamp(90px, 12vw, 170px); }
+}
+
+/* Short phones (iPhone SE, small Androids): the first screen still holds the title, the
+   buttons and the way down */
+@media (max-width: 599px) and (max-height: 760px) {
+  .hero-body { padding-top: calc(var(--nav) + 8px); }
+  .hero h1 { font-size: min(var(--h1), 8.4vh); }
+  .lead { font-size: 1rem; margin: 0.9rem 0 1.1rem; }
+  .stack { display: none; }
+  .skyline { height: 84px; }
+  .scroll-cue { margin-top: 10px; }
+}
+/* Phones turned sideways: everything sized on the little height there is */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero-body { padding-top: calc(var(--nav) + 6px); gap: 24px; }
+  .hero h1 { font-size: min(var(--h1), 11vh); }
+  .lead { font-size: 0.95rem; margin: 0.6rem 0 0.9rem; max-width: 36rem; }
+  .stack { display: none; }
+  .button { min-height: 42px; }
+  .phone-hero { height: 72vh; }
+  .skyline { height: 64px; }
+  .scroll-cue { margin-top: 4px; font-size: 0.85rem; }
+  .phone-inline { width: auto; height: 80vh; }
+  .chapter { padding: 56px 0; }
+}
+/* The narrowest phones: buttons side by side, a little smaller */
+@media (max-width: 360px) {
+  .button { min-height: 44px; padding: 0 1.1em; font-size: 0.95rem; }
+  .lead { font-size: 0.98rem; }
+}

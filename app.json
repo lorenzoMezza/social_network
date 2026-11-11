@@ -1,0 +1,92 @@
+{
+  "expo": {
+    "name": "UnnamedApp",
+    "slug": "projectExpoFrontend",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mezzakiller.projectExpoFrontend"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.WRITE_CALENDAR",
+        "android.permission.CAMERA"
+      ],
+      "blockedPermissions": [
+        "android.permission.READ_CALENDAR"
+      ],
+      "package": "com.mezzakiller.projectExpoFrontend",
+      "allowBackup": false
+    },
+    "plugins": [
+      "expo-asset",
+      "expo-router",
+      "expo-dev-client",
+      "expo-status-bar",
+      "expo-font",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": false,
+          "locationAlwaysPermission": false,
+          "locationWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location while the app is open, to show and update your avatar on the map."
+        }
+      ],
+      [
+        "expo-sensors",
+        {
+          "motionPermission": "Allow $(PRODUCT_NAME) to read your device motion, to turn your avatar on the map."
+        }
+      ],
+      [
+        "expo-calendar",
+        {
+          "writeOnlyAccess": true,
+          "writeOnlyCalendarPermission": "Allow $(PRODUCT_NAME) to add the events you choose to your calendar."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to use the camera to scan a friend's code and to take photos for your profile, your events and your groups.",
+          "microphonePermission": false,
+          "recordAudioAndroid": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to use photos from your library for your profile, your events and your groups.",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to use the camera to scan a friend's code and to take photos for your profile, your events and your groups.",
+          "microphonePermission": false
+        }
+      ],
+      "expo-secure-store",
+      "expo-web-browser",
+      "expo-splash-screen",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableMinifyInReleaseBuilds": false
+          }
+        }
+      ],
+      "@react-native-community/datetimepicker",
+      "expo-image",
+      "expo-iap"
+    ],
+    "scheme": "projectexpofrontend"
+  }
+}

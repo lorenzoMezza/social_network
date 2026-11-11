@@ -1,0 +1,26 @@
+# Registro delle attività di trattamento (art. 30, par. 1, GDPR)
+
+Titolare: [RAGIONE SOCIALE], [INDIRIZZO], [P.IVA], [privacy@DOMINIO] · DPO: [DA NOMINARE / NOME] · Aggiornato al: [DATA]
+
+> L'obbligo di tenuta vale anche sotto i 250 dipendenti perché il trattamento non è occasionale e include dati di geolocalizzazione (art. 30, par. 5). Misure di sicurezza comuni: vedi `misure-di-sicurezza.md`. Termini: vedi `conservazione-dati.md`. Fornitori: vedi `fornitori-e-trasferimenti.md`.
+
+| # | Trattamento | Finalità | Base giuridica | Interessati | Categorie di dati | Destinatari | Trasferimenti extra SEE | Conservazione |
+|---|---|---|---|---|---|---|---|---|
+| T1 | Account e autenticazione | Creare l'account, accesso sicuro | Contratto (6.1.b) | Utenti | Identificativo Logto (`sub`), email, metodo di accesso, data di creazione | Logto (responsabile), hosting | [Logto: verificare regione] | Fino a cancellazione account |
+| T2 | Profilo e avatar | Mostrare l'utente agli altri | Contratto (6.1.b) | Utenti | Nome, username, bio, immagine (senza EXIF), stile profilo, avatar | Altri utenti, hosting, CDN asset | [Hosting/CDN: verificare] | Fino a cancellazione; immagini sostituite cancellate subito |
+| T3 | Presenza sulla mappa | Mostrare l'utente ai vicini secondo la modalità scelta | Consenso (6.1.a), registrato con versione | Utenti in Visible/Approximate | Posizione, precisione, direzione, velocità, movimento; modalità; consenso (data, versione) | Altri utenti nel raggio (posizione precisa o punto d'area) | No (in memoria sul server) | Posizione: 45 s, solo memoria; registro consensi: con l'account |
+| T4 | Collegamenti di persona | Creare il collegamento, ricordare dove ci si è conosciuti | Contratto (6.1.b) | Utenti | Persone collegate, data, luogo generico | Le due persone collegate | No | Fino a scollegamento o cancellazione |
+| T5 | Chat e messaggi | Comunicazione tra utenti | Contratto (6.1.b) | Utenti | Contenuto dei messaggi, mittente, data, letture, foto dei gruppi | Membri della chat, hosting | [Hosting] | Vedi conservazione (C4) |
+| T6 | Eventi, partecipazioni, valutazioni | Organizzare e partecipare a eventi | Contratto (6.1.b) | Utenti | Eventi creati (luogo, orari, descrizione, copertina), partecipazioni, eventi salvati, valutazioni e commenti | Utenti che vedono l'evento | [Hosting] | Fino a cancellazione |
+| T7 | Album fotografici degli eventi | Condividere foto dell'evento | Contratto (6.1.b) per l'autore; per i terzi ritratti: consenso raccolto dall'autore (obbligo nei Termini) e diritto di opposizione/rimozione | Utenti; terzi ritratti | Foto (senza EXIF), autore, data | Utenti che vedono l'evento | [Hosting] | Fino a rimozione o cancellazione; file cancellati dal disco |
+| T8 | Gesti e fumetti sulla mappa | Interazioni effimere | Contratto (6.1.b) | Utenti | Gesto, testo breve, mittente | Persone vicine | No | Non conservati |
+| T9 | Segnalazioni e moderazione | Sicurezza, rispetto di Termini e legge, obblighi DSA | Legittimo interesse (6.1.f); obbligo legale (6.1.c) | Segnalanti, segnalati, terzi | Segnalazione (tipo, motivi, dettagli), decisione e motivazione, comunicazioni | Moderatori, autorità se richiesto | No | Vedi C6 |
+| T10 | Blocchi | Proteggere gli utenti | Contratto / legittimo interesse | Utenti | Chi blocca chi, data | — | No | Fino a sblocco o cancellazione |
+| T11 | Sicurezza tecnica e abusi | Proteggere i sistemi, limitare abusi | Legittimo interesse (6.1.f) | Utenti, visitatori | IP, richieste, esiti, contatori di frequenza | Hosting | [Hosting] | Log [30 giorni]; contatori in memoria (minuti) |
+| T12 | Notifiche push (quando attive) | Inviare le notifiche scelte | Contratto + scelta nelle impostazioni del dispositivo | Utenti | Token push, piattaforma, preferenze | Expo, APNs, FCM (responsabili/autonomi) | Sì (USA): [DPF/SCC da verificare] | Fino a revoca, cancellazione o token non valido |
+| T13 | Esercizio dei diritti | Rispondere alle richieste degli interessati | Obbligo legale (6.1.c) | Richiedenti | Richiesta, identità, risposta | — | No | [5 anni] dalla risposta (prova dell'adempimento) |
+| T14 | Esportazione dei dati | Accesso e portabilità (artt. 15, 20) | Obbligo legale (6.1.c) | Utenti | Copia JSON; token monouso | L'utente stesso | No | Token: 10 minuti, monouso; la copia non è conservata |
+| T16 | Promozioni, crediti e acquisti | Vendere crediti, addebitare promozioni, rimborsi, mostrare gli eventi sponsorizzati per distanza | Contratto (6.1.b); obbligo legale (6.1.c) ove applicabile | Organizzatori che acquistano | Saldo e movimenti, promozioni, identificativo della transazione, prodotto, codice dell'account presso lo store | Apple, Google (titolari autonomi), hosting | [Apple/Google: USA, secondo i loro termini] | Vedi C16; [obblighi contabili da verificare] |
+| T15 | Assistenza | Rispondere alle richieste degli utenti | Contratto / legittimo interesse | Utenti, terzi | Email, contenuto della richiesta | [Strumento di posta/helpdesk] | [Verificare] | [24 mesi] |
+
+Non sono trattate categorie particolari di dati (art. 9) per finalità del titolare. Possono comparire incidentalmente nei contenuti degli utenti (bio, messaggi, foto): il titolare non li ricerca né li elabora. Non vi sono processi decisionali automatizzati ai sensi dell'art. 22.

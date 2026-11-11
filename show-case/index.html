@@ -1,0 +1,228 @@
+<!doctype html>
+<!-- Copyright (c) 2026 Lorenzo Mezzabarba. All rights reserved. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>UnnamedApp: a social map app, designed and built by Lorenzo Mezzabarba</title>
+  <meta name="description" content="Case study: a social map app for meeting people at events nearby. iOS and Android app, real-time 3D map in three.js, Java backend with PostGIS. Designed and built end to end by Lorenzo Mezzabarba.">
+  <meta property="og:title" content="UnnamedApp: your city, a moment before you meet">
+  <meta property="og:description" content="A live 3D map of your neighbourhood: the people around you, the events starting now, the light of the hour.">
+  <meta property="og:image" content="media/opening.jpg">
+  <meta name="theme-color" content="#316CEE">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23316CEE'/%3E%3Cpath d='M32 10v30' stroke='%23F5B544' stroke-width='6' stroke-linecap='round'/%3E%3Cellipse cx='32' cy='46' rx='14' ry='5' fill='%23FFF1E6'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#story">Skip to how it works</a>
+  <div class="progress" aria-hidden="true"><span></span></div>
+
+  <nav class="bar" aria-label="Main">
+    <a class="wordmark" href="#top">UnnamedApp</a>
+    <ul class="chapters-nav">
+      <li><a href="#city">The app</a></li>
+      <li><a href="#pin">Events</a></li>
+      <li><a href="#connect">Connect</a></li>
+      <li><a href="#privacy">Privacy</a></li>
+      <li><a href="#engineering">Engineering</a></li>
+    </ul>
+    <div class="bar-actions">
+      <a class="button button-small button-gold" href="demo/" data-try>Try the beta</a>
+      <a class="button button-small" href="REPO_URL" data-repo>View the code</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-body">
+      <div class="hero-copy">
+        <h1>Your city, a moment before you meet.</h1>
+        <p class="lead">A live 3D map of your neighbourhood. The people around you walk on it as their avatars, and anyone can pin an event that everyone nearby sees as a beam of light. Designed and built end to end by Lorenzo Mezzabarba: app, 3D map and backend.</p>
+        <ul class="stack" aria-label="Built with">
+          <li>React Native</li><li>three.js</li><li>Java 25</li><li>PostgreSQL + PostGIS</li><li>WebSocket</li>
+        </ul>
+        <div class="actions">
+          <a class="button button-light" href="demo/" data-try>Try the beta in your browser</a>
+          <a class="button button-outline-light" href="REPO_URL" data-repo>View the code</a>
+        </div>
+      </div>
+      <figure class="phone phone-hero">
+        <video src="media/opening.mp4" poster="media/opening.jpg" muted loop playsinline preload="metadata" aria-label="The map at sunset turning to night, with people walking and beams of light over events"></video>
+      </figure>
+    </div>
+
+    <a class="scroll-cue" href="#story">
+      <span>Scroll to see how it works</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l7 7 7-7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <!-- Rome in flat planes: far hills, the Colosseum and the domes, the roofs nearby -->
+    <svg class="skyline" viewBox="0 0 1440 260" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <path class="plane-far" d="M0 176 C 180 142 330 158 500 146 S 820 122 1010 140 S 1300 126 1440 144 V260 H0 Z"/>
+      <g class="plane-mid">
+        <path d="M0 214 V190 H70 V176 H118 V196 H170 V184 H214 V214 Z"/>
+        <path d="M236 214 V150 Q236 136 256 133 L452 124 L470 124 L470 112 L496 110 L520 112 L540 118 Q560 122 560 138 V214 Z"/>
+        <path d="M580 214 V178 H630 V168 H676 V190 H720 V214 Z"/>
+        <path d="M990 214 V170 H1010 V158 H1022 A44 44 0 0 1 1110 158 H1122 V170 H1142 V214 Z"/>
+        <path d="M1060 116 H1072 V100 H1060 Z M1063 100 H1069 V90 H1063 Z"/>
+        <path d="M1160 214 V186 H1210 V172 H1262 V194 H1320 V180 H1372 V200 H1440 V214 Z"/>
+        <path d="M740 214 V184 Q770 160 800 184 V214 Z M820 214 V176 H872 V214 Z M890 214 V190 H960 V214 Z"/>
+      </g>
+      <g class="plane-arches">
+        <path d="M258 150 h12 v14 h-12 Z M282 149 h12 v14 h-12 Z M306 148 h12 v14 h-12 Z M330 147 h12 v14 h-12 Z M354 146 h12 v14 h-12 Z M378 145 h12 v14 h-12 Z M402 144 h12 v14 h-12 Z M426 143 h12 v14 h-12 Z M450 142 h12 v14 h-12 Z M474 141 h12 v14 h-12 Z M498 140 h12 v14 h-12 Z M522 140 h12 v14 h-12 Z"/>
+        <path d="M258 176 h12 v16 h-12 Z M282 176 h12 v16 h-12 Z M306 176 h12 v16 h-12 Z M330 176 h12 v16 h-12 Z M354 176 h12 v16 h-12 Z M378 176 h12 v16 h-12 Z M402 176 h12 v16 h-12 Z M426 176 h12 v16 h-12 Z M450 176 h12 v16 h-12 Z M474 176 h12 v16 h-12 Z M498 176 h12 v16 h-12 Z M522 176 h12 v16 h-12 Z"/>
+      </g>
+      <path class="plane-near" d="M0 260 V228 H90 V218 H150 V232 H260 V222 H330 V236 H600 V224 H660 V216 H700 V230 H760 V150 L774 132 L788 150 V230 H900 V220 H980 V234 H1180 V222 H1250 V214 H1300 V230 H1440 V260 Z"/>
+    </svg>
+  </header>
+
+  <main>
+    <!-- The story of an evening, afternoon to night: on wide screens one phone stays in view
+         and changes with each chapter; on narrow ones every chapter carries its own phone -->
+    <section class="story" id="story" data-tone="apricot" aria-label="How it works">
+      <div class="chapters">
+        <article class="chapter" id="city" data-tone="apricot">
+          <h2>Your neighbourhood, live in 3D.</h2>
+          <p>Real streets from OpenStreetMap, drawn like a model you can turn in your hand. The sky keeps the real hour and the real weather where you stand: rain when it rains, street lamps when the evening comes.</p>
+          <p class="note">OpenStreetMap vector tiles packed as PMTiles and turned into geometry on the phone. The resolution adapts on the fly to hold 42 frames a second on older phones; the weather comes in every half hour, the sun and moon from their real positions.</p>
+          <figure class="phone phone-inline"><video src="media/city.mp4" poster="media/city.jpg" muted loop playsinline preload="none" aria-label="At noon the camera rises over the streets and the people walking; later a storm rolls in at night"></video></figure>
+        </article>
+
+        <article class="chapter" id="people" data-tone="peach">
+          <h2>See who's out, right now.</h2>
+          <p>The people around you walk on the map as their avatars, where they really are, as it happens. Tap someone to wave or say hi; tap yourself to say something to everyone nearby, in a bubble over your head.</p>
+          <p class="note">Positions travel over one WebSocket, at most once a second. You see the 25 nearest people, your connections first, drawn as one batched crowd from avatars the server bakes in advance.</p>
+          <figure class="phone phone-inline"><video src="media/people.mp4" poster="media/people.jpg" muted loop playsinline preload="none" aria-label="Tapping a person walking on the map: the camera flies to her and a wave goes out; then a message to everyone around"></video></figure>
+        </article>
+
+        <article class="chapter" id="pin" data-tone="coral">
+          <h2>Anyone can put an event on the map.</h2>
+          <p>Press and hold the map for something happening right now, or plan one for any day in the next month, with a photo, a full description and how far it should reach. No venue, no followers needed. Then make it yours: how its beam moves, its colour and symbol, the look of its page.</p>
+          <p class="note">Events keep 15 m apart so beams never stack, and each person runs five at most. Every beam style is a branch of one shader, picked per instance, so a hundred differently dressed events still draw in one pass.</p>
+          <figure class="phone phone-inline"><video src="media/pin.mp4" poster="media/pin.jpg" muted loop playsinline preload="none" aria-label="A long press on the map puts up a flash event and its beam rises; then a planned event gets a cover photo, a long description, a 600 m reach and its own style, and its purple beam appears on the map"></video></figure>
+        </article>
+
+        <article class="chapter" id="reach" data-tone="rose">
+          <h2>You only see what reaches you.</h2>
+          <p>Each event reaches as far as its organizer chooses, from 100 to 800 metres, so a barbecue stays in its street and a concert can light up the whole district. Tap a beam and the camera flies over, or read them all in one list: what's on now at the top, the ones your friends are going to marked.</p>
+          <p class="note">PostGIS finds the events whose reach covers you; a paid promotion widens it up to 10 km, charged a day at a time. The flight re-solves its framing every frame, so the event lands above its card.</p>
+          <figure class="phone phone-inline"><video src="media/reach.mp4" poster="media/reach.jpg" muted loop playsinline preload="none" aria-label="A tap on a beam of light flies the camera to a rooftop DJ set and its page opens; then the list of events around"></video></figure>
+        </article>
+
+        <article class="chapter" id="connect" data-tone="dusk">
+          <h2>Meet first. Connect after.</h2>
+          <p>There is no search and no friend request. To connect, you stand next to someone: one phone shows a code, the other scans it. Everyone you're connected with is someone you actually met.</p>
+          <p class="note">Each code is 128 random bits, valid for 10 seconds, single use and rotated every 5. The server checks blocks and distance, then tells the other phone over the WebSocket.</p>
+          <ol class="steps">
+            <li><img src="media/connect-card.jpg" alt="" width="600" height="1304"><span>Tap Connect on someone right there with you</span></li>
+            <li><img src="media/connect-code.jpg" alt="" width="600" height="1304"><span>Show your code, they scan it</span></li>
+            <li><img src="media/connect-wave.jpg" alt="" width="600" height="1304"><span>Connected: chat from anywhere</span></li>
+          </ol>
+          <figure class="phone phone-inline"><video src="media/connect.mp4" poster="media/connect.jpg" muted loop playsinline preload="none" aria-label="Tapping Nico on the map, showing a code that he scans, Connected, then a wave that he returns"></video></figure>
+        </article>
+
+        <article class="chapter" id="plans" data-tone="evening">
+          <h2>The plan before, the photos after.</h2>
+          <p>Chats with your connections, groups, and one for every event you join: pin the meeting point, put the time to a vote. Afterwards everyone who went adds their pictures to the event's shared album.</p>
+          <p class="note">Each message is numbered by a single update of its chat's row, and sending twice with the same id gives one message. Photos go straight to storage through a signed URL and are re-encoded without their metadata before anyone sees them.</p>
+          <figure class="phone phone-inline"><video src="media/plans.mp4" poster="media/plans.jpg" muted loop playsinline preload="none" aria-label="The chat list, a group with a pinned message and a poll; then an event's shared album"></video></figure>
+        </article>
+
+        <article class="chapter" id="you" data-tone="night">
+          <h2>Show up as you.</h2>
+          <p>A 3D avatar built from hundreds of pieces walks for you on the map, so friends recognise you across the square. Your profile shows it the way you set it: a backdrop, what it stands on, what floats around it and the greeting it plays.</p>
+          <p class="note">A catalog of 700+ wearables. For the map the server bakes each look into one mesh and one texture atlas, so a crowd costs a handful of draw calls; the profile reuses one 3D view, kept warm between screens.</p>
+          <figure class="phone phone-inline"><video src="media/you.mp4" poster="media/you.jpg" muted loop playsinline preload="none" aria-label="Changing the avatar's top and hair; then the profile's backdrop, greeting and effects"></video></figure>
+        </article>
+      </div>
+
+      <div class="stage" aria-hidden="true">
+        <figure class="phone phone-stage">
+          <video data-src="media/city.mp4" poster="media/city.jpg" muted loop playsinline preload="none"></video>
+          <video data-src="media/people.mp4" poster="media/people.jpg" muted loop playsinline preload="none"></video>
+          <video data-src="media/pin.mp4" poster="media/pin.jpg" muted loop playsinline preload="none"></video>
+          <video data-src="media/reach.mp4" poster="media/reach.jpg" muted loop playsinline preload="none"></video>
+          <video data-src="media/connect.mp4" poster="media/connect.jpg" muted loop playsinline preload="none"></video>
+          <video data-src="media/plans.mp4" poster="media/plans.jpg" muted loop playsinline preload="none"></video>
+          <video data-src="media/you.mp4" poster="media/you.jpg" muted loop playsinline preload="none"></video>
+        </figure>
+      </div>
+    </section>
+
+
+    <section class="privacy" id="privacy">
+      <h2>Your position is never stored.</h2>
+      <ul class="promises">
+        <li><strong>Invisible by default.</strong> Every time you open the map, until you choose otherwise.</li>
+        <li><strong>Close by only.</strong> People within about a kilometre see you, while you're on the map and one minute after.</li>
+        <li><strong>Your area, not your spot.</strong> Approximate mode shows a circle of a few hundred metres instead of where you stand.</li>
+        <li><strong>No history.</strong> The server keeps only your latest position, in memory, and forgets it when you leave.</li>
+        <li><strong>Yours to take or delete.</strong> Download a copy of your data, or delete your account and everything in it, from Settings.</li>
+      </ul>
+    </section>
+
+    <section class="engineering" id="engineering">
+      <div class="engineering-inner">
+        <h2>How it's built</h2>
+        <p class="built-lead">One person, three codebases that talk to each other: the mobile app, the 3D map that runs inside it, and the backend behind both. The map and the avatars rely on no outside provider: there is no map SDK, tile service or avatar platform underneath, only open data and open-source parts.</p>
+
+        <figure class="architecture" aria-label="Architecture">
+          <div class="arch-col">
+            <div class="arch-box arch-app"><strong>Mobile app</strong><span>Expo, React Native, iOS and Android</span></div>
+            <div class="arch-box arch-map"><strong>3D map</strong><span>three-geo-play on three.js, in a WebView</span></div>
+          </div>
+          <div class="arch-links" aria-hidden="true"><span>REST</span><span>one WebSocket</span></div>
+          <div class="arch-col">
+            <div class="arch-box arch-core"><strong>Java backend</strong><span>Spring Boot and Jetty: REST, gateway, live presence, jobs</span></div>
+            <div class="arch-row">
+              <div class="arch-box"><strong>PostgreSQL</strong><span>PostGIS</span></div>
+              <div class="arch-box"><strong>Object storage</strong><span>R2, libvips worker</span></div>
+              <div class="arch-box"><strong>Push</strong><span>APNs, FCM</span></div>
+            </div>
+          </div>
+        </figure>
+
+
+        <div class="columns">
+          <div>
+            <h3>The app</h3>
+            <p>Expo Router, Reanimated and a liquid-glass tab bar on iOS 26. An outbox for messages sent offline, per-account caches with ETags, light and dark themes, and a WebView bridge that replays its state when the map reloads.</p>
+          </div>
+          <div>
+            <h3>The map</h3>
+            <p>Drawn by three-geo-play, a three.js library written for this map, from vector tiles cut out of OpenStreetMap data and served by the project's own tile server. Shaders give the city its hour: sky, clouds reprojected at their depth, fog, rain, lightning, street edges that light up at dusk, each one measured on real phones and kept or cut by its cost.</p>
+          </div>
+          <div>
+            <h3>The avatars</h3>
+            <p>Put together from Decentraland's open-source wearables by the project's own pipeline and avatar server: textures recompressed for each phone's GPU (ASTC), geometry compacted with meshopt, files kept on the phone after the first download.</p>
+          </div>
+          <div>
+            <h3>The backend</h3>
+            <p>Java 25 with Error Prone and NullAway from the first line. Who sees whom is computed in memory on a spatial index; money moves under row locks with a ledger; jobs that follow a change are written in its own transaction.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing" id="about">
+      <div class="closing-inner">
+        <h2>Made by Lorenzo Mezzabarba.</h2>
+        <p>Product, design and code: the app, the map and the backend, and this page, shot in the iOS simulator with the app itself. The repository has the full source, the design documents and the tests.</p>
+        <div class="actions">
+          <a class="button button-gold" href="demo/" data-try>Try the beta</a>
+          <a class="button button-outline-light" href="REPO_URL" data-repo>View the code on GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>UnnamedApp, a project by Lorenzo Mezzabarba. The people, events and photos on this page are demo data.</p>
+    <p class="credits">Map data © OpenStreetMap contributors. Avatar assets from Decentraland. Photos in the app from Unsplash.</p>
+  </footer>
+
+  <script src="main.js" defer></script>
+</body>
+</html>

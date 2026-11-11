@@ -1,0 +1,129 @@
+/* Copyright (c) 2026 Lorenzo Mezzabarba. All rights reserved. */
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #cfe3f0;
+  /* A long press (the joystick) must not start text selection or the iOS loupe */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+canvas {
+  display: block;
+  touch-action: none;
+}
+
+#debug-stats {
+  position: fixed;
+  right: 6px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  font: 10px/1.35 ui-monospace, Menlo, monospace;
+  white-space: pre;
+  text-align: right;
+  pointer-events: none;
+}
+
+/* Development tools: scene panel (src/ui/scenePanel.js) */
+.dev-button {
+  position: fixed;
+  left: 6px;
+  z-index: 10;
+  padding: 8px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.68);
+  color: #fff;
+  font: 12px system-ui, sans-serif;
+  touch-action: manipulation;
+}
+
+.scene-panel {
+  position: fixed;
+  left: 6px;
+  z-index: 10;
+  width: min(280px, calc(100vw - 12px));
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(14, 18, 26, 0.82);
+  color: #fff;
+  font: 12px system-ui, sans-serif;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.scene-panel[hidden] {
+  display: none;
+}
+
+.scene-title {
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.scene-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+}
+
+.scene-row > span:first-child {
+  flex: 0 0 74px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.scene-row input[type='range'],
+.scene-row select {
+  flex: 1;
+  min-width: 0;
+}
+
+.scene-value {
+  flex: 0 0 40px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.scene-status {
+  margin-top: 6px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+/* Development tools: test panel (src/ui/testPanel.js) */
+.test-panel {
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+.test-section {
+  margin-top: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Development tools: teleport panel (src/ui/teleportPanel.js) */
+.teleport-place {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 9px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font: 12px system-ui, sans-serif;
+  text-align: left;
+  touch-action: manipulation;
+}
+

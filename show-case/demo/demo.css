@@ -1,0 +1,80 @@
+/* Copyright (c) 2026 Lorenzo Mezzabarba. All rights reserved. */
+
+/* The try-it page: the app at full height and, on a computer, beside it what this page is
+   (a beta, squeezed into a browser); on a phone the app takes the screen and the screen
+   shown while the server starts says it instead */
+:root { --demo-night: #17132f; --demo-cream: #fff1e6; --demo-red: #ff6b6b; --demo-gold: #f5b544; }
+
+#demo-cover {
+  position: fixed; inset: 0; z-index: 2147483000; display: grid; place-items: center; padding: 24px; overflow-y: auto;
+  background: radial-gradient(120% 80% at 50% 110%, #4b5bd1 0%, #241e4a 55%, var(--demo-night) 100%);
+  color: var(--demo-cream); font: 500 15px/1.45 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: opacity 0.6s ease, visibility 0.6s;
+}
+#demo-cover.is-done { opacity: 0; visibility: hidden; }
+.demo-cover-body { max-width: 320px; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.demo-beam {
+  width: 10px; height: 96px; margin: 0 auto 22px; border-radius: 6px;
+  background: linear-gradient(to top, var(--demo-gold), rgba(245, 181, 68, 0));
+  box-shadow: 0 0 24px 6px rgba(245, 181, 68, 0.35);
+  animation: demo-breathe 1.8s ease-in-out infinite;
+}
+.demo-cover-title { margin: 12px 0 6px; font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
+.demo-cover-step { margin: 0 0 20px; color: var(--demo-gold); min-height: 1.45em; }
+.demo-cover-caveat { margin: 0; padding: 12px 14px; border-radius: 12px; font-size: 14px; text-align: left; color: #ffd9d9;
+  background: rgba(255, 107, 107, 0.14); box-shadow: inset 0 0 0 1px rgba(255, 107, 107, 0.55); }
+.demo-cover-caveat strong { color: var(--demo-red); }
+.demo-open {
+  margin-top: 20px; min-height: 48px; padding: 0 28px; border: 0; border-radius: 999px; cursor: pointer;
+  background: var(--demo-gold); color: #241e4a; font: 700 16px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.demo-open[hidden] { display: none; }
+.demo-back { margin-top: 16px; color: rgba(255, 241, 230, 0.75); font-size: 14px; }
+#demo-cover.is-failed .demo-beam { animation: none; opacity: 0.3; }
+@keyframes demo-breathe { 50% { opacity: 0.55; transform: scaleY(0.92); } }
+
+.demo-badge {
+  display: inline-block; padding: 4px 10px; border-radius: 999px; font: 800 12px/1.2 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--demo-night); background: var(--demo-gold);
+}
+
+#demo-aside { display: none; }
+/* Inside the frame the words are beside the app already */
+.demo-embedded .demo-cover-caveat, .demo-embedded .demo-back { display: none; }
+
+/* A computer: the app in a phone-sized frame, the words beside it */
+html.demo-hosting, html.demo-hosting body { height: 100%; background: var(--demo-night); }
+html.demo-hosting body {
+  margin: 0; display: flex; align-items: center; justify-content: center; gap: clamp(32px, 5vw, 72px);
+  padding: 0 24px; box-sizing: border-box; overflow: auto;
+}
+html.demo-hosting #root { display: none !important; }
+#demo-frame {
+  flex: none; width: 430px; height: min(932px, calc(100vh - 40px)); border: 0; border-radius: 28px; background: var(--demo-night);
+  box-shadow: 0 0 0 2px #d6d0c7, 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+}
+html.demo-hosting #demo-aside {
+  display: block; flex: 0 1 400px; max-height: calc(100vh - 40px); overflow-y: auto; color: var(--demo-cream);
+  font: 400 16px/1.55 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+#demo-aside h1 { margin: 16px 0 12px; font-size: 30px; line-height: 1.12; letter-spacing: -0.02em; color: var(--demo-red); }
+#demo-aside h2 { margin: 24px 0 8px; font-size: 17px; }
+#demo-aside p { margin: 0 0 12px; }
+#demo-aside .demo-warning-text { color: #ffb3b3; font-weight: 500; }
+#demo-aside ul { margin: 0 0 14px; padding-left: 20px; }
+#demo-aside li { margin-bottom: 5px; }
+#demo-aside a { color: var(--demo-gold); }
+#demo-aside .demo-aside-small { font-size: 13.5px; color: rgba(255, 241, 230, 0.65); }
+#demo-aside .demo-back { display: inline-block; margin-top: 6px; font-weight: 600; }
+
+/* Between a phone and a computer: the words under the app, the short version */
+@media (max-width: 899px) {
+  html.demo-hosting body { flex-direction: column; justify-content: flex-start; gap: 20px; padding: 16px 24px 32px; }
+  #demo-frame { height: min(860px, calc(100vh - 170px)); min-height: 520px; }
+  html.demo-hosting #demo-aside { flex: none; width: 430px; max-width: 100%; max-height: none; overflow: visible; text-align: center; }
+  #demo-aside h1 { margin: 10px 0 8px; font-size: 22px; }
+  #demo-aside .demo-warning-text { font-size: 14.5px; }
+  #demo-aside > :not(.demo-badge):not(h1):not(.demo-warning-text):not(.demo-back) { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) { .demo-beam { animation: none; } }

@@ -1,0 +1,53 @@
+# The showcase site (show-case/) on GitHub Pages, with the whole app to try in show-case/demo/.
+# demo/ is built on a computer with `make demo` and committed: it needs the avatar library,
+# the map tiles and the baked map avatars, which are not in git. Here it only gets the
+# site's address (its build holds /__DEMO_BASE__ for it) and the repository's link.
+# Repository settings › Pages › Source: GitHub Actions.
+name: Pages
+
+on:
+  push:
+    branches: [main]
+    paths: ['show-case/**', '.github/workflows/pages.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: The site, with the addresses of this repository
+        env:
+          REPO: ${{ github.event.repository.name }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          # <user>.github.io is served at the root, any other repository under /<name>
+          case "$REPO" in *.github.io) base=/demo ;; *) base="/$REPO/demo" ;; esac
+          test -f show-case/demo/index.html || { echo "show-case/demo/ is missing: run make demo and commit it"; exit 1; }
+          mkdir _site
+          tar -C show-case --exclude=./raw --exclude=./tools -cf - . | tar -C _site -xf -
+          grep -rlZ -e '/__DEMO_BASE__' --include='*.html' --include='*.js' --include='*.mjs' --include='*.css' --include='*.json' _site \
+            | xargs -0 -r sed -i "s#/__DEMO_BASE__#$base#g"
+          sed -i "s#REPO_URL#$REPO_URL#g" _site/index.html
+          touch _site/.nojekyll
+          echo "Site: https://${{ github.repository_owner }}.github.io${base%/demo}/  app: $base/"
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deployment
+        uses: actions/deploy-pages@v4

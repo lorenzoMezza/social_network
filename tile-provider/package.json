@@ -1,0 +1,15 @@
+{
+  "name": "tile-provider",
+  "author": "Lorenzo Mezzabarba",
+  "private": true,
+  "type": "module",
+  "description": "Zoom-16 vector tiles for the app's map: OpenMapTiles via Planetiler, slimmed to what the map draws",
+  "engines": {
+    "node": ">=23.8"
+  },
+  "dependencies": {
+    "@mapbox/vector-tile": "3.0.0",
+    "pbf": "5.1.2",
+    "pmtiles": "4.4.1"
+  }
+}

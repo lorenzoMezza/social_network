@@ -1,0 +1,1 @@
+__d(function(g,r,i,a,m,e,d){"use strict";Object.defineProperty(e,'__esModule',{value:!0}),Object.defineProperty(e,"default",{enumerable:!0,get:function(){return u}});var n=r(d[0]),t=r(d[1]),c=r(d[2]);function u(){const{id:u,name:o}=(0,n.useLocalSearchParams)();return(0,c.jsx)(t.TheirConnectionsScreen,{id:u,name:o},u)}},798,[814,834,6]);
