@@ -2,7 +2,7 @@
 
 <p align="center">
   <b>A social map for meeting people at the events around you, in person.</b><br>
-  A live 3D map of your neighbourhood: the people around you walk on it as their avatars, and
+  A live 3D map of your neighbourhood : the people around you walk on it as their avatars, and
   anyone can pin an event that everyone nearby sees as a beam of light.
 </p>
 
