@@ -1,0 +1,17 @@
+/* Copyright (c) 2026 Lorenzo Mezzabarba. All rights reserved. */
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+canvas {
+  display: block;
+  /* Horizontal drags turn the avatar; vertical ones still scroll the app's page */
+  touch-action: pan-y;
+}

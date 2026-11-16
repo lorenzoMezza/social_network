@@ -1,0 +1,12 @@
+Copyright (c) 2026 Lorenzo Mezzabarba. All rights reserved.
+
+This repository is published to show the work. No permission is granted to copy,
+modify, distribute or otherwise use its code or content, in whole or in part,
+without the written consent of the author.
+
+Parts that come from others keep their own licences:
+  - webview/three-geo-play: MIT License (webview/three-geo-play/LICENSE)
+  - the Decentraland avatar assets and animations: Apache License 2.0
+    (assets/models/decentraland/LICENSE)
+  - map data: © OpenStreetMap contributors, Open Database License (ODbL)
+  - the packages the app is built with: legal/THIRD-PARTY-NOTICES.md

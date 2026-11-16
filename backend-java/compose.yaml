@@ -1,0 +1,24 @@
+# Copyright (c) 2026 Lorenzo Mezzabarba. All rights reserved.
+
+# The database of development: the same PostGIS as production, on 5433 (5432 is often a
+# Postgres of the computer). `make dev JAVA=1` starts it; by hand: `docker compose up -d --wait`
+# in this folder, then ./gradlew :app:bootRun.
+# Tests do not use it: they start their own (Testcontainers).
+services:
+  postgres:
+    image: postgis/postgis:18-3.7
+    environment:
+      POSTGRES_DB: masterkey
+      POSTGRES_USER: masterkey
+      POSTGRES_PASSWORD: masterkey
+    ports:
+      - "127.0.0.1:5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U masterkey -d masterkey"]
+      interval: 2s
+      timeout: 5s
+      retries: 60
+    volumes:
+      - masterkey-postgres:/var/lib/postgresql
+volumes:
+  masterkey-postgres:
