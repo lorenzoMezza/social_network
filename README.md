@@ -77,7 +77,7 @@ Some of the choices, in short:
   real app code with its Python backend compiled to WebAssembly, in your tab. It is a web
   stand-in for a phone app, so expect rough edges.
 - **On your computer:** `make dev` sets everything up and starts the servers and Expo (macOS or
-  Linux, Node 24+, uv). The full guide, in Italian, is in
+  Linux, Node 24+, uv). The full guide, is in
   [`docs/DEVELOPMENT.md`](docs/DEVELOPMENT.md).
 
 ## Status
